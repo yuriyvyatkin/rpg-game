@@ -1,0 +1,41 @@
+{
+  "name": "ajs-diploma-project",
+  "version": "1.0.0",
+  "description": "Diploma project on the course of Netology 'Advanced JS'",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack --mode production",
+    "show:dist": "live-server dist",
+    "start": "npm run build && npm run show:dist",
+    "coverage": "jest --coverage",
+    "show:coverage": "live-server coverage/lcov-report",
+    "test": "npm run coverage && npm run show:coverage",
+    "lint": "eslint ."
+  },
+  "author": "Yuriy Vyatkin",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/cli": "^7.7.7",
+    "@babel/core": "^7.7.7",
+    "@babel/preset-env": "^7.7.7",
+    "babel-jest": "^24.9.0",
+    "babel-loader": "^8.0.6",
+    "css-loader": "^3.4.0",
+    "url-loader": "^4.1.1",
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-plugin-import": "^2.19.1",
+    "html-loader": "^0.5.5",
+    "html-webpack-plugin": "^3.2.0",
+    "jest": "^24.9.0",
+    "live-server": "^1.2.1",
+    "mini-css-extract-plugin": "^0.9.0",
+    "webpack": "^4.41.4",
+    "webpack-cli": "^3.3.10",
+    "webpack-dev-server": "^3.10.1"
+  },
+  "dependencies": {
+    "@babel/polyfill": "^7.7.0",
+    "core-js": "^3.6.0"
+  }
+}
