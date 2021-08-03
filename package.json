@@ -4,13 +4,18 @@
   "description": "Diploma project on the course of Netology 'Advanced JS'",
   "main": "index.js",
   "scripts": {
+    "start": "webpack-dev-server --mode development",
     "build": "webpack --mode production",
-    "show:dist": "live-server dist",
-    "start": "npm run build && npm run show:dist",
+    "lint": "eslint .",
+    "test": "jest",
     "coverage": "jest --coverage",
+    "doc": "jsdoc -c jsdoc.conf.json",
+    "preshow:coverage": "npm run coverage",
     "show:coverage": "live-server coverage/lcov-report",
-    "test": "npm run coverage && npm run show:coverage",
-    "lint": "eslint ."
+    "preshow:doc": "npm run doc",
+    "show:doc": "live-server doc",
+    "preshow:dist": "npm run build",
+    "show:dist": "live-server dist"
   },
   "author": "Yuriy Vyatkin",
   "license": "ISC",
