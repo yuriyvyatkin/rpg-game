@@ -54,8 +54,8 @@ test('getVisualActionParameters method should return correct parameters', () => 
 
 test('GamePlay should handle loading errors', () => {
   let data = [
-    ["theme", "prairie"],
-    ["team",
+    ['theme', 'prairie'],
+    ['team',
       [
         {
           character: {},
@@ -63,7 +63,7 @@ test('GamePlay should handle loading errors', () => {
         },
       ],
     ],
-    ["points", 0],
+    ['points', 0],
   ];
   jest.spyOn(gamePlay.gameStateService, 'load').mockImplementation(() => data);
   expect(gamePlay.gameStateService.load()).toEqual(data);
@@ -75,15 +75,15 @@ test('GamePlay should handle loading errors', () => {
   expect(error).toThrow('Error! Correct "theme" property data didn\'t loaded.');
 
   data = [
-    ["theme", "prairie"],
-    ["points", 0],
+    ['theme', 'prairie'],
+    ['points', 0],
   ];
   error = () => gamePlay.getSavedGameState();
   expect(error).toThrow('Error! "team" property didn\'t loaded.');
 
   data = [
-    ["theme", "prairie"],
-    ["team",
+    ['theme', 'prairie'],
+    ['team',
       [
         {
           character: {},
@@ -96,8 +96,8 @@ test('GamePlay should handle loading errors', () => {
   expect(error).toThrow('Error! Invalid data loaded in property "team".');
 
   data = [
-    ["theme", "prairie"],
-    ["team",
+    ['theme', 'prairie'],
+    ['team',
       [
         {
           character: {},
