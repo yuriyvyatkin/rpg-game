@@ -1,3 +1,4 @@
+import swal from 'sweetalert';
 import { calcHealthLevel, calcTileType } from './utils';
 import themes from './themes';
 import cursors from './cursors';
@@ -445,7 +446,6 @@ export default class GamePlay {
       character.level = newUserCharsLevels[i - this.team.length];
       character.attack *= character.level;
       character.defence *= character.level;
-      // умножить attack/defence на level
     }
 
     this.team.forEach((member, index) => {
@@ -609,11 +609,11 @@ export default class GamePlay {
   }
 
   static showError(message) {
-    alert(message);
+    swal(message);
   }
 
   static showMessage(message) {
-    alert(message);
+    swal(message);
   }
 
   selectCell(index, color = 'yellow') {
