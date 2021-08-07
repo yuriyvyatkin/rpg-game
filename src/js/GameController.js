@@ -42,6 +42,11 @@ export default class GameController {
 
   onSaveGameClick() {
     this.gameStateService.save(Object.entries(GameState));
+
+    this.constructor.showInfoMessage(
+      'Game saved',
+      'Click the \'Load Game\' button to use your saved game.',
+    );
   }
 
   onLoadGameClick() {
@@ -145,9 +150,13 @@ export default class GameController {
         setTimeout(() => {
           this.enemyAction();
           GameState.from({ team: this.team });
-        }, 100);
+        }, 300);
+      } else if (this.boardEl.style.cursor === cursors.notallowed) {
+        this.constructor.showWarningMessage(
+          'The distance is too great to attack!',
+        );
       } else {
-        this.constructor.showError(
+        this.constructor.showWarningMessage(
           'You can\'t select enemy character!',
         );
       }
@@ -162,8 +171,10 @@ export default class GameController {
         this.redrawPositions(this.team);
 
         // computer turn
-        this.enemyAction();
-        GameState.from({ team: this.team });
+        setTimeout(() => {
+          this.enemyAction();
+          GameState.from({ team: this.team });
+        }, 300);
       }
     }
   }

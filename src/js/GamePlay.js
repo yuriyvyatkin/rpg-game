@@ -200,15 +200,17 @@ export default class GamePlay {
       this.selectedCharacter.character.attack * 0.1,
     ));
     this.chosenCharacter.character.health -= damage;
+
     const killedIndex = this.team.findIndex(
       (member) => member.character.health <= 0,
     );
-    this.deselectCell(this.selectedUserPosition);
-    this.boardEl.style.cursor = cursors.auto;
+    if (this.selectedUserPosition >= 0) {
+      this.deselectCell(this.selectedUserPosition);
+      this.boardEl.style.cursor = cursors.auto;
+    }
 
     let emptyCellIndex;
     let enemyCharactersStartIndex;
-
     if (killedIndex >= 0) {
       emptyCellIndex = this.team[killedIndex].position;
       this.team.splice(killedIndex, 1);
@@ -217,14 +219,12 @@ export default class GamePlay {
       );
     }
 
-    setTimeout(() => {
-      if (
-        this.chosenCharacter
-        && this.chosenCharacter.position !== this.selectedCharacter.position
-      ) {
-        this.showDamage(this.chosenCharacter.position, damage);
-      }
-    }, 100);
+    if (
+      this.chosenCharacter
+      && this.chosenCharacter.position !== this.selectedCharacter.position
+    ) {
+      this.showDamage(this.chosenCharacter.position, damage);
+    }
 
     setTimeout(() => {
       if (emptyCellIndex) {
@@ -237,6 +237,12 @@ export default class GamePlay {
           this.cellEnterListeners = [];
           this.cellLeaveListeners = [];
           this.redrawPositions(this.team);
+          setTimeout(() => {
+            this.constructor.showInfoMessage(
+              'GAME OVER',
+              'Thank you for playing!',
+            );
+          }, 500);
         } else {
           this.redrawPositions(this.team);
         }
@@ -394,6 +400,9 @@ export default class GamePlay {
   }
 
   levelUp() {
+    this.constructor.showSuccessMessage(
+      `Level ${this.team[0].character.level} completed!`,
+    );
     const nextLevel = this.team[0].character.level + 1;
     const newUserCharsLevels = [];
     let points = 0;
@@ -608,12 +617,16 @@ export default class GamePlay {
     this.loadGameListeners.forEach((o) => o.call(null));
   }
 
-  static showError(message) {
-    swal(message);
+  static showWarningMessage(message) {
+    swal('Warning!', message, 'warning');
   }
 
-  static showMessage(message) {
-    swal(message);
+  static showSuccessMessage(message) {
+    swal('Good job!', message, 'success');
+  }
+
+  static showInfoMessage(title, message) {
+    swal(title, message, 'info');
   }
 
   selectCell(index, color = 'yellow') {
