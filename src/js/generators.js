@@ -18,14 +18,14 @@ export function* characterGenerator(allowedTypes, maxLevel) {
     const randomTypeNumber = Math.floor(Math.random() * allowedTypes.length);
     const randomLevel = Math.floor(Math.random() * maxLevel) + 1;
     const randomType = new allowedTypes[randomTypeNumber](randomLevel);
+    randomType.attack *= randomLevel;
+    randomType.defence *= randomLevel;
     yield randomType;
   }
-  // TODO: write logic here
 }
 
-export function generateTeam(maxLevel, characterCount) {
+export function generateTeam(maxLevel, characterCount, boardSize) {
   const allowedTypes = [Swordsman, Bowman, Magician, Daemon, Undead, Vampire];
-  const boardSize = 8;
   const totalNumberTiles = boardSize ** 2;
   const subTeamLimit = characterCount > boardSize * 4
     ? boardSize * 2
@@ -77,5 +77,4 @@ export function generateTeam(maxLevel, characterCount) {
   } while ((userTeam.length < subTeamLimit) || (enemyTeam.length < subTeamLimit));
 
   return [...userTeam, ...enemyTeam];
-  // TODO: write logic here
 }

@@ -7,7 +7,6 @@ export default class GameState {
     this.points = typeof data.points === 'number'
       ? data.points
       : this.points;
-    // TODO: create object
     return null;
   }
 }

@@ -41,11 +41,13 @@ export default class GamePlay {
         <button data-id="action-save" class="btn">Save Game</button>
         <button data-id="action-load" class="btn">Load Game</button>
       </div>
+      <p class="points">Points number: <span class="points-number">0</span></p>
       <div class="board-container">
         <div data-id="board" class="board"></div>
       </div>
     `;
 
+    this.points = this.container.querySelector('.points-number');
     this.newGameEl = this.container.querySelector('[data-id=action-restart]');
     this.saveGameEl = this.container.querySelector('[data-id=action-save]');
     this.loadGameEl = this.container.querySelector('[data-id=action-load]');
@@ -250,7 +252,7 @@ export default class GamePlay {
     const userCharacters = this.team.slice(0, enemyCharactersStartIndex);
     const enemyCharacters = this.team.slice(enemyCharactersStartIndex);
 
-    // preparation
+    // attack preparation
     let rivalsPairs = enemyCharacters.map((enemyChar) => {
       const target = userCharacters.reduce((acc, userChar) => {
         const distanceBetweenCells = this.getDistance(
@@ -395,6 +397,8 @@ export default class GamePlay {
     const newUserCharsLevels = [];
     let points = 0;
     let nextTheme;
+    let themesValues;
+    let randomTheme;
 
     switch (nextLevel) {
       case 2:
@@ -416,7 +420,9 @@ export default class GamePlay {
         );
         break;
       default:
-        nextTheme = themes.mountain;
+        themesValues = Object.values(themes);
+        randomTheme = themesValues[Math.floor(Math.random() * themesValues.length)];
+        nextTheme = randomTheme;
         newUserCharsLevels.push(Math.floor(Math.random() * nextLevel + 1));
         newUserCharsLevels.push(Math.floor(Math.random() * nextLevel + 1));
     }
@@ -424,6 +430,7 @@ export default class GamePlay {
     const newTeam = generateTeam(
       nextLevel,
       (this.team.length + newUserCharsLevels.length) * 2,
+      this.boardSize,
     );
 
     for (
@@ -433,7 +440,12 @@ export default class GamePlay {
       i += 1
     ) {
       const { character } = newTeam[i];
+      character.attack /= character.level;
+      character.defence /= character.level;
       character.level = newUserCharsLevels[i - this.team.length];
+      character.attack *= character.level;
+      character.defence *= character.level;
+      // умножить attack/defence на level
     }
 
     this.team.forEach((member, index) => {
@@ -459,6 +471,7 @@ export default class GamePlay {
     this.drawUi(nextTheme);
     this.team = newTeam;
     this.redrawPositions(this.team);
+    this.points.textContent = points;
     GameState.from({
       theme: nextTheme,
       team: this.team,

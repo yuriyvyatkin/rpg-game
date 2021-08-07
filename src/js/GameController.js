@@ -10,9 +10,12 @@ export default class GameController {
     this.gamePlay.addNewGameListener(this.onNewGameClick.bind(this));
     this.gamePlay.addSaveGameListener(this.onSaveGameClick.bind(this.gamePlay));
     this.gamePlay.addLoadGameListener(this.onLoadGameClick.bind(this.gamePlay));
+    this.gamePlay.addCellEnterListener(this.onCellEnter.bind(this.gamePlay));
+    this.gamePlay.addCellLeaveListener(this.onCellLeave.bind(this.gamePlay));
+    this.gamePlay.addCellClickListener(this.onCellClick.bind(this.gamePlay));
     GameState.from({
       theme: themes.prairie,
-      team: generateTeam(1, 4),
+      team: generateTeam(1, 4, this.gamePlay.boardSize),
       points: 0,
     });
   }
@@ -21,19 +24,20 @@ export default class GameController {
     this.gamePlay.team = GameState.team;
     this.gamePlay.drawUi(GameState.theme);
     this.gamePlay.redrawPositions(GameState.team);
-    this.gamePlay.addCellEnterListener(this.onCellEnter.bind(this.gamePlay));
-    this.gamePlay.addCellLeaveListener(this.onCellLeave.bind(this.gamePlay));
-    this.gamePlay.addCellClickListener(this.onCellClick.bind(this.gamePlay));
-    // TODO: add event listeners to gamePlay events
-    // TODO: load saved stated from stateService
+    if (this.gamePlay.cellClickListeners.length === 0) {
+      this.gamePlay.addCellEnterListener(this.onCellEnter.bind(this.gamePlay));
+      this.gamePlay.addCellLeaveListener(this.onCellLeave.bind(this.gamePlay));
+      this.gamePlay.addCellClickListener(this.onCellClick.bind(this.gamePlay));
+    }
   }
 
   onNewGameClick() {
     GameState.from({
       theme: themes.prairie,
-      team: generateTeam(1, 4),
+      team: generateTeam(1, 4, this.gamePlay.boardSize),
     });
     this.init();
+    this.gamePlay.points.textContent = GameState.points;
   }
 
   onSaveGameClick() {
@@ -52,6 +56,7 @@ export default class GameController {
     this.team = GameState.team;
     this.drawUi(GameState.theme);
     this.redrawPositions(GameState.team);
+    this.points.textContent = GameState.points;
   }
 
   onCellEnter(index) {
@@ -111,7 +116,6 @@ export default class GameController {
     } else {
       this.setCursor(cursors.auto);
     }
-    // TODO: react to mouse enter
   }
 
   onCellLeave(index) {
@@ -120,7 +124,6 @@ export default class GameController {
     if (!isYellowCell) {
       this.deselectCell(index);
     }
-    // TODO: react to mouse leave
   }
 
   onCellClick(index) {
@@ -145,7 +148,7 @@ export default class GameController {
         }, 100);
       } else {
         this.constructor.showError(
-          'Ошибка! Нельзя выбрать персонажа противника.',
+          'You can\'t select enemy character!',
         );
       }
     } else {
@@ -163,6 +166,5 @@ export default class GameController {
         GameState.from({ team: this.team });
       }
     }
-    // TODO: react to click
   }
 }
