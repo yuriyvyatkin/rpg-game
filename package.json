@@ -1,8 +1,12 @@
 {
-  "name": "ajs-diploma-project",
-  "version": "1.0.0",
-  "description": "Diploma project on the course of Netology 'Advanced JS'",
-  "main": "index.js",
+  "name": "rpg-game",
+  "author": {
+    "name": "Yuriy Vyatkin"
+  },
+  "license": "Mozilla Public License 2.0",
+  "repository": "github.com/yuriyvyatkin/ajs-diploma-project",
+  "main": "src/index.js",
+  "private": true,
   "scripts": {
     "start": "webpack-dev-server --mode development",
     "build": "webpack --mode production",
@@ -17,8 +21,6 @@
     "preshow:dist": "npm run build",
     "show:dist": "live-server dist"
   },
-  "author": "Yuriy Vyatkin",
-  "license": "ISC",
   "devDependencies": {
     "@babel/cli": "^7.7.7",
     "@babel/core": "^7.7.7",
