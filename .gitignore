@@ -1,3 +1,4 @@
+drafts
 dist
 doc
 .idea
@@ -86,3 +87,7 @@ typings/
 # Thumbnails
 Thumbs.db
 Thumbs.db:encryptable
+
+# CSS comb
+.csscomb.json
+
