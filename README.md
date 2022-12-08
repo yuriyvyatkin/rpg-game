@@ -1,4 +1,4 @@
-# AJS. Retro Game
+# Дипломная работа курса «Продвинутый JavaScript»
 
 [![Build status](https://ci.appveyor.com/api/projects/status/rxmx3xx12ykvd44i?svg=true)](https://ci.appveyor.com/project/yuriyvyatkin/ajs-diploma-project)
 
